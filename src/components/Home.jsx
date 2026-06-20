@@ -47,7 +47,11 @@ function Home({
           <span className="hero-kicker">Welcome to MovieHub</span>
 
           <h1>
-            Explore Thousands of Movies, TV Shows & Entertainment Content.
+            <img
+              src="https://source.unsplash.com/1600x600/?movies,cinema"
+              alt="Banner showing movies and cinema"
+              style={{ width: "100%", maxHeight: "420px", objectFit: "cover", borderRadius: "8px" }}
+            />
           </h1>
 
           <p>
