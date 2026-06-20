@@ -1,3 +1,4 @@
+import { useState } from "react";
 import BookCard from "../BookCard";
 
 const quickPicks = [
@@ -40,6 +41,13 @@ function Home({
   onNavigate,
   onViewDetails,
 }) {
+  const [showResultsBox, setShowResultsBox] = useState(false);
+
+  const handleSubmit = (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (onSearch) onSearch(e);
+    setShowResultsBox(true);
+  };
   return (
     <div className="home-page">
       {activeQuery && activeQuery.trim() !== "" ? (
@@ -86,11 +94,39 @@ function Home({
           ) : null}
         </section>
       ) : null}
+
+      {showResultsBox && movies.length > 0 ? (
+        <div className="results-box" role="dialog" aria-label="Search results">
+          <button
+            className="results-close"
+            aria-label="Close results"
+            onClick={() => setShowResultsBox(false)}
+          >
+            ✕
+          </button>
+
+          <div className="results-box-head">
+            <strong>Results for "{activeQuery}"</strong>
+          </div>
+
+          <div className="results-box-list">
+            <div className="movie-grid">
+              {movies.map((movie) => (
+                <BookCard
+                  key={movie.imdbID}
+                  movie={movie}
+                  onViewDetails={onViewDetails}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
       <section className="hero">
         <div className="hero-copy">
           <span className="hero-kicker">Welcome to MovieHub</span>
 
-          <form className="search-bar" onSubmit={onSearch}>
+          <form className="search-bar" onSubmit={handleSubmit}>
             <label className="sr-only" htmlFor="movie-search">
               Search movies
             </label>
@@ -111,7 +147,10 @@ function Home({
               type="button"
               className="clear-button"
               aria-label="Clear search"
-              onClick={() => onQueryChange("")}
+              onClick={() => {
+                onQueryChange("");
+                setShowResultsBox(false);
+              }}
             >
               ✕
             </button>
