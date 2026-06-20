@@ -46,13 +46,12 @@ function Home({
         <div className="hero-copy">
           <span className="hero-kicker">Welcome to MovieHub</span>
 
-          <h1>
+          <div className="hero-banner">
             <img
               src="https://source.unsplash.com/1600x600/?movies,cinema"
-              alt="Banner showing movies and cinema"
-              style={{ width: "100%", maxHeight: "420px", objectFit: "cover", borderRadius: "8px" }}
+              alt="Movies banner"
             />
-          </h1>
+          </div>
 
           <p>
             Discover the latest blockbusters, timeless classics,

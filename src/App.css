@@ -162,6 +162,19 @@
   gap: 1.2rem;
 }
 
+/* Banner image wrapper for the hero section */
+.hero-banner {
+  width: 100%;
+}
+
+.hero-banner img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
 .hero-kicker,
 .section-kicker,
 .badge {
