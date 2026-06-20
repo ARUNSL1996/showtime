@@ -46,25 +46,6 @@ function Home({
         <div className="hero-copy">
           <span className="hero-kicker">Welcome to MovieHub</span>
 
-          <div className="hero-banner">
-            <img
-              src="https://thumbs.dreamstime.com/b/illustration-film-industry-popcorn-reel-film-clapperboard-cinema-screen-highly-detailed-illustration-128248155.jpg"
-              alt="Movies banner"
-                <img
-                  src="https://thumbs.dreamstime.com/b/illustration-film-industry-popcorn-reel-film-clapperboard-cinema-screen-highly-detailed-illustration-128248155.jpg"
-                  alt="Movies banner"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = 'https://source.unsplash.com/1600x600/?movies,cinema';
-                  }}
-                />
-            Discover the latest blockbusters, timeless classics,
-            award-winning series, and trending releases from around the
-            world. Search instantly, view detailed information, ratings,
-            cast members, and production data all in one modern movie
-            discovery platform.
-          </p>
-
           <form className="search-bar" onSubmit={onSearch}>
             <label className="sr-only" htmlFor="movie-search">
               Search movies
@@ -82,6 +63,26 @@ function Home({
               Search Catalog
             </button>
           </form>
+
+          <div className="hero-banner">
+            <img
+              src="https://thumbs.dreamstime.com/b/illustration-film-industry-popcorn-reel-film-clapperboard-cinema-screen-highly-detailed-illustration-128248155.jpg"
+              alt="Movies banner"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src =
+                  "https://source.unsplash.com/1600x600/?movies,cinema";
+              }}
+            />
+          </div>
+
+          <p>
+            Discover the latest blockbusters, timeless classics,
+            award-winning series, and trending releases from around the
+            world. Search instantly, view detailed information, ratings,
+            cast members, and production data all in one modern movie
+            discovery platform.
+          </p>
 
           <div className="quick-picks" aria-label="Quick search suggestions">
             {quickPicks.map((item) => (
@@ -144,9 +145,7 @@ function Home({
         {featureCards.map((card, index) => (
           <article key={card.title} className="feature-card">
             <span className="section-kicker">0{index + 1}</span>
-
             <h3>{card.title}</h3>
-
             <p>{card.text}</p>
           </article>
         ))}
@@ -156,7 +155,6 @@ function Home({
         <div className="section-head">
           <div>
             <span className="section-kicker">Search Results</span>
-
             <h2>Search Results: "{activeQuery}"</h2>
           </div>
 
@@ -174,9 +172,7 @@ function Home({
         ) : null}
 
         {!error && loading && movies.length === 0 ? (
-          <div className="empty-state">
-            Loading movie results...
-          </div>
+          <div className="empty-state">Loading movie results...</div>
         ) : null}
 
         {!error && !loading && movies.length === 0 ? (
