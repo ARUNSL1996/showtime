@@ -60,11 +60,7 @@ function Home({
             </div>
 
             <p>
-              {loading
-                ? "Loading the latest movie data..."
-                : `Found ${movies.length} matching result${
-                    movies.length === 1 ? "" : "s"
-                  } in our movie database.`}
+              
             </p>
           </div>
 
@@ -100,7 +96,10 @@ function Home({
           <button
             className="results-close"
             aria-label="Close results"
-            onClick={() => setShowResultsBox(false)}
+            onClick={() => {
+              setShowResultsBox(false);
+              onQueryChange("");
+            }}
           >
             ✕
           </button>
@@ -243,49 +242,7 @@ function Home({
         ))}
       </section>
 
-      <section className="results-panel" aria-live="polite">
-        <div className="section-head">
-          <div>
-            <span className="section-kicker">Search Results</span>
-            <h2>Search Results: "{activeQuery}"</h2>
-          </div>
-
-          <p>
-            {loading
-              ? "Loading the latest movie data..."
-              : `Found ${movies.length} matching result${
-                  movies.length === 1 ? "" : "s"
-                } in our movie database.`}
-          </p>
-        </div>
-
-        {error ? (
-          <div className="empty-state error-state">{error}</div>
-        ) : null}
-
-        {!error && loading && movies.length === 0 ? (
-          <div className="empty-state">Loading movie results...</div>
-        ) : null}
-
-        {!error && !loading && movies.length === 0 ? (
-          <div className="empty-state">
-            No movies found. Try a different keyword or choose one of the
-            featured titles above.
-          </div>
-        ) : null}
-
-        {movies.length > 0 ? (
-          <div className="movie-grid">
-            {movies.map((movie) => (
-              <BookCard
-                key={movie.imdbID}
-                movie={movie}
-                onViewDetails={onViewDetails}
-              />
-            ))}
-          </div>
-        ) : null}
-      </section>
+      
     </div>
   );
 }
