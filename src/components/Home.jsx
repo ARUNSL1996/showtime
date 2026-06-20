@@ -42,7 +42,7 @@ function Home({
 }) {
   return (
     <div className="home-page">
-      {(activeQuery && activeQuery.trim() !== "") || movies.length > 0 ? (
+      {activeQuery && activeQuery.trim() !== "" ? (
         <section className="results-panel" aria-live="polite">
           <div className="section-head">
             <div>
@@ -105,6 +105,15 @@ function Home({
 
             <button type="submit" className="primary-button">
               Search Catalog
+            </button>
+
+            <button
+              type="button"
+              className="clear-button"
+              aria-label="Clear search"
+              onClick={() => onQueryChange("")}
+            >
+              ✕
             </button>
           </form>
 
