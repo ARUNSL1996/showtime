@@ -48,12 +48,16 @@ function Home({
 
           <div className="hero-banner">
             <img
-              src="https://source.unsplash.com/1600x600/?movies,cinema"
+              src="https://thumbs.dreamstime.com/b/illustration-film-industry-popcorn-reel-film-clapperboard-cinema-screen-highly-detailed-illustration-128248155.jpg"
               alt="Movies banner"
-            />
-          </div>
-
-          <p>
+                <img
+                  src="https://thumbs.dreamstime.com/b/illustration-film-industry-popcorn-reel-film-clapperboard-cinema-screen-highly-detailed-illustration-128248155.jpg"
+                  alt="Movies banner"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = 'https://source.unsplash.com/1600x600/?movies,cinema';
+                  }}
+                />
             Discover the latest blockbusters, timeless classics,
             award-winning series, and trending releases from around the
             world. Search instantly, view detailed information, ratings,
