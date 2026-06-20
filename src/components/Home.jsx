@@ -59,9 +59,16 @@ function Home({
               <h2>Search Results: "{activeQuery}"</h2>
             </div>
 
-            <p>
-              
-            </p>
+            <button
+              type="button"
+              className="results-action-button"
+              onClick={() => {
+                setShowResultsBox(false);
+                onQueryChange("");
+              }}
+            >
+              Hide results
+            </button>
           </div>
 
           {error ? <div className="empty-state error-state">{error}</div> : null}
