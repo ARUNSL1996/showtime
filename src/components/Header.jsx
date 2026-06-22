@@ -4,7 +4,13 @@ const navItems = [
   { id: 'signup', label: 'Create Account' },
 ]
 
-function Header({ currentPage, onNavigate }) {
+function Header({
+  currentPage,
+  onNavigate,
+  searchQuery,
+  onSearchQueryChange,
+  onSearchSubmit,
+}) {
   return (
     <header className="site-header">
       <div className="site-header__inner">
@@ -20,6 +26,24 @@ function Header({ currentPage, onNavigate }) {
             <span>Curated movie discovery</span>
           </span>
         </button>
+
+        <form className="header-search" onSubmit={onSearchSubmit}>
+          <label className="sr-only" htmlFor="header-search">
+            Search movies
+          </label>
+
+          <input
+            id="header-search"
+            type="search"
+            placeholder="Search movies..."
+            value={searchQuery}
+            onChange={(event) => onSearchQueryChange(event.target.value)}
+          />
+
+          <button type="submit" className="header-search__button">
+            Search
+          </button>
+        </form>
 
         <nav className="site-nav" aria-label="Primary">
           {navItems.map((item) => (

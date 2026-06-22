@@ -5,17 +5,17 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import DetailsPage from './components/DetailsPage'
 import Home from './components/Home'
+import SearchResultsBox from './components/SearchResultsBox'
 
 const DEFAULT_QUERY = 'batman'
 const API_URL = 'https://www.omdbapi.com/?apikey=da61c02'
 
 async function fetchMovies(title, handlers) {
-  const { setMovies, setLoading, setError, setActiveQuery } = handlers
+  const { setMovies, setLoading, setError } = handlers
   const term = title.trim() || DEFAULT_QUERY
 
   setLoading(true)
   setError('')
-  setActiveQuery(term)
 
   try {
     const response = await fetch(`${API_URL}&s=${encodeURIComponent(term)}`)
@@ -87,10 +87,14 @@ async function fetchMovieDetails(movieId, handlers) {
 function App() {
   const [page, setPage] = useState('home')
   const [movies, setMovies] = useState([])
-  const [query, setQuery] = useState(DEFAULT_QUERY)
-  const [activeQuery, setActiveQuery] = useState(DEFAULT_QUERY)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [activeSearchQuery, setActiveSearchQuery] = useState('')
+  const [searchMovies, setSearchMovies] = useState([])
+  const [searchLoading, setSearchLoading] = useState(false)
+  const [searchError, setSearchError] = useState('')
+  const [showSearchResults, setShowSearchResults] = useState(false)
   const [selectedMovie, setSelectedMovie] = useState(null)
   const [detailsLoading, setDetailsLoading] = useState(false)
   const [detailsError, setDetailsError] = useState('')
@@ -100,27 +104,31 @@ function App() {
       setMovies,
       setLoading,
       setError,
-      setActiveQuery,
     })
   }, [])
 
+  useEffect(() => {
+    if (page !== 'home') {
+      setShowSearchResults(false)
+    }
+  }, [page])
+
   const handleSearchSubmit = (event) => {
     event.preventDefault()
-    void fetchMovies(query, {
-      setMovies,
-      setLoading,
-      setError,
-      setActiveQuery,
-    })
-  }
 
-  const handleQuickPick = (title) => {
-    setQuery(title)
-    void fetchMovies(title, {
-      setMovies,
-      setLoading,
-      setError,
-      setActiveQuery,
+    const term = searchQuery.trim() || DEFAULT_QUERY
+
+    setPage('home')
+    setSearchQuery(term)
+    setActiveSearchQuery(term)
+    setSearchMovies([])
+    setSearchError('')
+    setShowSearchResults(true)
+
+    void fetchMovies(term, {
+      setMovies: setSearchMovies,
+      setLoading: setSearchLoading,
+      setError: setSearchError,
     })
   }
 
@@ -140,19 +148,20 @@ function App() {
 
   return (
     <div className="app-shell">
-      <Header currentPage={page === 'details' ? 'home' : page} onNavigate={setPage} />
+      <Header
+        currentPage={page === 'details' ? 'home' : page}
+        onNavigate={setPage}
+        searchQuery={searchQuery}
+        onSearchQueryChange={setSearchQuery}
+        onSearchSubmit={handleSearchSubmit}
+      />
 
       <main className="app-main">
         {page === 'home' ? (
           <Home
             movies={movies}
-            query={query}
-            activeQuery={activeQuery}
             loading={loading}
             error={error}
-            onQueryChange={setQuery}
-            onSearch={handleSearchSubmit}
-            onQuickPick={handleQuickPick}
             onNavigate={setPage}
             onViewDetails={handleViewDetails}
           />
@@ -167,6 +176,17 @@ function App() {
           <AuthPage mode={page} onNavigate={setPage} />
         )}
       </main>
+
+      {page === 'home' && showSearchResults ? (
+        <SearchResultsBox
+          query={activeSearchQuery}
+          movies={searchMovies}
+          loading={searchLoading}
+          error={searchError}
+          onClose={() => setShowSearchResults(false)}
+          onViewDetails={handleViewDetails}
+        />
+      ) : null}
 
       <Footer onNavigate={setPage} />
     </div>

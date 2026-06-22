@@ -13,8 +13,8 @@ function Footer({ onNavigate }) {
           <div>
             <strong>ShowTime</strong>
             <p>
-              A polished movie discovery experience with search, title details,
-              and account-ready views.
+              A polished movie discovery experience with search, title
+              details, and account-ready views.
             </p>
           </div>
         </div>
